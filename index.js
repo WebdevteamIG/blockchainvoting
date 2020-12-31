@@ -6,9 +6,10 @@ require("dotenv");
 let deployedContractAddress = null;
 let publickey = process.env.publickey;
 let privatekey = process.env.privatekey
+let initializedWeb3 = null;
 
 function connectWeb3(){
-    // Todo : Connect web3 to rinkeby network
+    // Todo : Connect web3 to rinkeby network and assign intitialised web3 to the variable
 }
 
 function deployContract(){

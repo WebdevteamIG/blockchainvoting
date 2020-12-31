@@ -1,4 +1,5 @@
 pragma solidity^0.7.0;
+pragma experimental ABIEncoderV2;
 
 contract Voting {
     
@@ -22,11 +23,11 @@ contract Voting {
         // Todo : Assign admin address to contract creaters address
     }
     
-    function addCandidate() onlyAdmin notEnded public {
+    function addCandidate(string memory _candidateName) onlyAdmin notEnded public {
         // Todo : Write code to add new Candidate
     }
     
-    function vote() notEnded public {
+    function vote(string memory _candidateName) notEnded public {
         // Todo : first verify voter previously voted
         // increase count of candidateid in voteCount;
         
@@ -34,6 +35,10 @@ contract Voting {
     
     function end() onlyAdmin notEnded public{
         // Todo : End the election
+    }
+
+    function getResults() onlyAdmin public returns(string[] memory names, uint256[] memory votes) {
+        // Todo : Return results as names array and votes count
     }
     
 }
