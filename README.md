@@ -11,6 +11,7 @@ Also he as lot of videos on blockchain do check them out <br>
 
 ## Setup guide
 Install metamsk extension <a href="https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn">here</a><br>
+Create .env and copy .env.example contents into it and replace with your credentials <br>
 Go to https://remix.ethereum.org/ <br>
 Paste the solidity code there and run tests <br>
 
