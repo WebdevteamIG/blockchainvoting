@@ -11,11 +11,13 @@ contract Voting {
     
     modifier onlyAdmin{
         // Todo : Only adming modifier
+        require(msg.sender == admin);
         _;
     }
     
     modifier notEnded{
         //Todo : Verify ended or not
+        require(ended == false);
         _;
     }
     
