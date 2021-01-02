@@ -11,11 +11,13 @@ contract Voting {
     
     modifier onlyAdmin{
         // Todo : Only adming modifier
+        require(msg.sender == admin);
         _;
     }
     
     modifier notEnded{
         //Todo : Verify ended or not
+        require(ended == false);
         _;
     }
     
@@ -36,6 +38,7 @@ contract Voting {
     
     function end() onlyAdmin notEnded public{
         // Todo : End the election
+        ended=true;
     }
 
     function getResults() onlyAdmin public returns(string[] memory names, uint256[] memory votes) {
