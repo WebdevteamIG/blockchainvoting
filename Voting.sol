@@ -1,4 +1,4 @@
-pragma solidity^0.7.0;
+pragma solidity ^0.7.0;
 pragma experimental ABIEncoderV2;
 
 contract Voting {
@@ -21,6 +21,7 @@ contract Voting {
     
     constructor (){
         // Todo : Assign admin address to contract creaters address
+        admin=msg.sender;
     }
     
     function addCandidate(string memory _candidateName) onlyAdmin notEnded public {
