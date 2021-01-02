@@ -8,7 +8,7 @@ contract Voting {
     mapping(uint256 => uint256) voteCount; // To keep track of votes for candidate (candidate id is used for noting which is index of candidates array)
     mapping(address => bool) voted; // use voted or not
     bool ended = false; // To check ended oor not
-    
+    mapping(string => uint) checkuser;
     modifier onlyAdmin{
         // Todo : Only adming modifier
         require(msg.sender == admin);
@@ -25,9 +25,16 @@ contract Voting {
         // Todo : Assign admin address to contract creaters address
         admin=msg.sender;
     }
-    
+    // function checklength() public view returns(uint)
+    // {
+    //     return candidates.length;
+    // }
     function addCandidate(string memory _candidateName) onlyAdmin notEnded public {
         // Todo : Write code to add new Candidate
+        if(checkuser[_candidateName]!=1){
+        candidates.push(_candidateName);
+        checkuser[_candidateName]=1;
+        }
     }
     
     function vote(string memory _candidateName) notEnded public {
