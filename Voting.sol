@@ -38,6 +38,7 @@ contract Voting {
     
     function end() onlyAdmin notEnded public{
         // Todo : End the election
+        ended=true;
     }
 
     function getResults() onlyAdmin public returns(string[] memory names, uint256[] memory votes) {
