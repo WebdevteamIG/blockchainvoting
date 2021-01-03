@@ -8,7 +8,7 @@ contract Voting {
     mapping(uint256 => uint256) voteCount; // To keep track of votes for candidate (candidate id is used for noting which is index of candidates array)
     mapping(address => bool) voted; // use voted or not
     bool ended = false; // To check ended oor not
-    
+    bool t=true;
     modifier onlyAdmin{
         // Todo : Only adming modifier
         require(msg.sender == admin);
@@ -33,7 +33,16 @@ contract Voting {
     function vote(string memory _candidateName) notEnded public {
         // Todo : first verify voter previously voted
         // increase count of candidateid in voteCount;
-        
+        t=true;
+        for(uint i=0;i< candidates.length;i++)
+        {
+            if (keccak256(abi.encodePacked(_candidateName)) == keccak256(abi.encodePacked(candidates[i]))) 
+            {
+                t=false;break;
+            }
+        }
+        if(t==true)
+            {candidates.push(_candidateName);}
     }
     
     function end() onlyAdmin notEnded public{
