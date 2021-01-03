@@ -70,6 +70,13 @@ contract Voting {
 
     function getResults() onlyAdmin public returns(string[] memory names, uint256[] memory votes) {
         // Todo : Return results as names array and votes count
+        string[] memory _names;
+        uint256[] memory _votes;
+        for(uint i=0;i<candidates.length;i++){
+            _names[i]=candidates[i];
+            _votes[i]=voteCount[i];
+        }
+        return(_names,_votes);
     }
     
 }
