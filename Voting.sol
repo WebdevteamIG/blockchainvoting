@@ -28,11 +28,6 @@ contract Voting {
     
     function addCandidate(string memory _candidateName) onlyAdmin notEnded public {
         // Todo : Write code to add new Candidate
-    }
-    
-    function vote(string memory _candidateName) notEnded public {
-        // Todo : first verify voter previously voted
-        // increase count of candidateid in voteCount;
         t=true;
         for(uint i=0;i< candidates.length;i++)
         {
@@ -43,6 +38,12 @@ contract Voting {
         }
         if(t==true)
             {candidates.push(_candidateName);}
+    }
+    
+    function vote(string memory _candidateName) notEnded public {
+        // Todo : first verify voter previously voted
+        // increase count of candidateid in voteCount;
+        
     }
     
     function end() onlyAdmin notEnded public{
