@@ -43,6 +43,15 @@ contract Voting {
     function vote(string memory _candidateName) notEnded public {
         // Todo : first verify voter previously voted
         // increase count of candidateid in voteCount;
+        if(voted[msg.sender]==false){
+            for(uint i=0;i<candidates.length;i++){
+                if (keccak256(abi.encodePacked(_candidateName)) == keccak256(abi.encodePacked(candidates[i]))){
+                    voteCount[i]++;
+                    break;//deafult values in a mapping for uint is 0 so need not worry about
+                    //base case
+                }
+            }
+        }
     }
     
     function end() onlyAdmin notEnded public{
