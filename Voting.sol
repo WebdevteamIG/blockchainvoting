@@ -43,14 +43,23 @@ contract Voting {
     function vote(string memory _candidateName) notEnded public {
         // Todo : first verify voter previously voted
         // increase count of candidateid in voteCount;
+        bool t=true;
         if(voted[msg.sender]==false){
             for(uint i=0;i<candidates.length;i++){
                 if (keccak256(abi.encodePacked(_candidateName)) == keccak256(abi.encodePacked(candidates[i]))){
                     voteCount[i]++;
+                    voted[msg.sender]=true;//marking him since he voted now
+                    t=false;
                     break;//deafult values in a mapping for uint is 0 so need not worry about
                     //base case
                 }
             }
+        }
+        else{
+            revert("the person has already voted");
+        }
+        if(t==true){
+            revert("the candidate does not exist in the list");
         }
     }
     
