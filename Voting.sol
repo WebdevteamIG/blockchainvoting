@@ -57,8 +57,8 @@ contract Voting {
 
     function getResults() onlyAdmin public returns(string[] memory names, uint256[] memory votes) {
         // Todo : Return results as names array and votes count
-        string[] memory _names;
-        uint256[] memory _votes;
+        string[] memory _names = new string[](candidates.length);
+        uint256[] memory _votes = new uint256[](candidates.length);
         for(uint i=0;i<candidates.length;i++){
             _names[i]=candidates[i];
             _votes[i]=voteCount[i];
