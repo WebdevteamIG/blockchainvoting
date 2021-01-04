@@ -20,24 +20,9 @@ contract Voting {
         _;
     }
     
-    constructor (){
-        // Todo : Assign admin address to contract creaters address
+    constructor (string[] memory _candidates){
+        candidate = _candidates;
         admin=msg.sender;
-    }
-    
-    function addCandidate(string memory _candidateName) onlyAdmin notEnded public {
-        // Todo : Write code to add new Candidate
-        bool t=true;//for checking
-        // looping through the entire candidates array to check whether the string exists or not
-        for(uint i=0;i< candidates.length;i++){
-            if (keccak256(abi.encodePacked(_candidateName)) == keccak256(abi.encodePacked(candidates[i]))){
-                t=false;
-                break;//need to break out of the loop after getting an equality
-            }
-        }
-        if(t==true){
-            candidates.push(_candidateName);
-        }
     }
     
     function vote(string memory _candidateName) notEnded public {
