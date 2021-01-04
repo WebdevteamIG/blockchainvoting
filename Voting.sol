@@ -8,7 +8,6 @@ contract Voting {
     mapping(uint256 => uint256) voteCount; // To keep track of votes for candidate (candidate id is used for noting which is index of candidates array)
     mapping(address => bool) voted; // use voted or not
     bool ended = false; // To check ended oor not
-    uint endtime;
     modifier onlyAdmin{
         // Todo : Only adming modifier
         require(msg.sender == admin);
@@ -17,14 +16,13 @@ contract Voting {
     
     modifier notEnded{
         //Todo : Verify ended or not
-        require(ended == false && block.timestamp < endtime);
+        require(ended == false);
         _;
     }
     
-    constructor (uint duarationHours, string[] memory _candidates){
+    constructor (string[] memory _candidates){
         candidates = _candidates;
         admin=msg.sender;
-        endtime =  block.timestamp + (duarationHours * 1 hours);
     }
     
     function vote(string memory _candidateName) notEnded public {
