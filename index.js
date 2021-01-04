@@ -10,6 +10,7 @@ let initializedWeb3 = null;
 
 function connectWeb3(){
     // Todo : Connect web3 to rinkeby network and assign intitialised web3 to the variable
+    initializedWeb3=new web3('https://rinkeby.infura.io/v3/YOUR-PROJECT-ID');
 }
 
 function deployContract(){
