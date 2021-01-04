@@ -5,13 +5,14 @@ require("dotenv");
 
 let deployedContractAddress = null;
 let publickey = process.env.publickey;
-let privatekey = process.env.privatekey
+let privatekey = process.env.privatekey;
+let infuraid = process.env.infuraid;
 let initializedWeb3 = null;
 
 function connectWeb3(){
     // Todo : Connect web3 to rinkeby network and assign intitialised web3 to the variable
     try{
-        initializedWeb3=new web3('https://rinkeby.infura.io/v3/YOUR-PROJECT-ID');
+        initializedWeb3=new web3('https://rinkeby.infura.io/v3/'+infuraid);
         console.log('connected');
     }
     catch(err){
