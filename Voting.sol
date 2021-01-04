@@ -21,7 +21,7 @@ contract Voting {
     }
     
     constructor (string[] memory _candidates){
-        candidate = _candidates;
+        candidates = _candidates;
         admin=msg.sender;
     }
     
