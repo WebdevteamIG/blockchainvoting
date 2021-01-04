@@ -20,20 +20,8 @@ contract Voting {
         _;
     }
     
-    constructor (string memory _candidateName){
-        // Code to get list of candidates
-        bool t=true;//for checking
-        // looping through the entire candidates array to check whether the string exists or not
-        for(uint i=0;i< candidates.length;i++){
-            if (keccak256(abi.encodePacked(_candidateName)) == keccak256(abi.encodePacked(candidates[i]))){
-                t=false;
-                break;//if there is already a registered voter in the name
-            }
-        }
-        if(t==true){
-            candidates.push(_candidateName);
-        }
-        // Todo : Assign admin address to contract creaters address
+    constructor (string[] memory _candidates){
+        candidate = _candidates;
         admin=msg.sender;
     }
     
