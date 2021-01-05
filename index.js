@@ -10,6 +10,7 @@ let publickey = process.env.publickey;
 let privatekey = process.env.privatekey;
 let infuraid = process.env.infuraid;
 let initializedWeb3 = null;
+let contract = null;
 
 function connectWeb3(){
     // Todo : Connect web3 to rinkeby network and assign intitialised web3 to the variable
@@ -30,7 +31,7 @@ function deployContract(){
     console.log('Abi: ', abi);
     let bytecode = compiledContract.contracts['Voting'].bytecode;
     let gasEstimate = initializedWeb3.eth.estimateGas({data: bytecode});
-    let contract = initializedWeb3.eth.contract(JSON.parse(abi));
+    contract = initializedWeb3.eth.contract(JSON.parse(abi));
     contract.new({from:publickey, data:bytecode, value:30000000000000000000, gas:gasEstimate}, function(err, myContract){
     if(!err) {
         if(!myContract.address) {
