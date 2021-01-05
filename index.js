@@ -1,5 +1,7 @@
 const web3 = require("web3");
 require("dotenv");
+const solc = require('solc');
+const fs = require('fs');
 
 // You can convert functions to async await based on requirements but do not change the structure
 
@@ -22,6 +24,26 @@ function connectWeb3(){
 
 function deployContract(){
     //Todo : Deploy the contract
+    let source = fs.readFileSync('Voting.sol', 'utf8');
+    let compiledContract = solc.compile(source, 1);
+    let abi = compiledContract.contracts['Voting'].interface;
+    console.log('Abi: ', abi);
+    let bytecode = compiledContract.contracts['Voting'].bytecode;
+    let gasEstimate = initializedWeb3.eth.estimateGas({data: bytecode});
+    let contract = initializedWeb3.eth.contract(JSON.parse(abi));
+    contract.new({from:publickey, data:bytecode, value:30000000000000000000, gas:gasEstimate}, function(err, myContract){
+    if(!err) {
+        if(!myContract.address) {
+            console.log("Hash: ", myContract.transactionHash);
+        } else {
+            deployedContractAddress=myContract.address;
+            console.log("Address: ", myContract.address);
+        }
+    }
+    else {
+        console.log(err);
+    }
+    });
 }
 
 function callAddCandidate(candidateName){
