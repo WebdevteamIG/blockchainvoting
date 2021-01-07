@@ -14,6 +14,7 @@ let publickey = process.env.publickey;
 let privatekey = process.env.privatekey;
 let infuraid = process.env.infuraid;
 let initializedWeb3 = null;
+let cdata = null;
 
 function connectWeb3(){
     // Todo : Connect web3 to rinkeby network and assign intitialised web3 to the variable
@@ -51,90 +52,37 @@ async function deployContract(){
     }; 
     var compiledcode = JSON.parse(solc.compile(JSON.stringify(input))).contracts["Voting.sol"].Voting;
     var abi = compiledcode.abi;
-    console.log(abi);
+    // console.log(abi);
     var data = compiledcode.evm.bytecode.object;
-    console.log(data);
-
-    var abi = [
-        {
-          inputs: [
-            {
-              internalType: "string[]",
-              name: "_candidates",
-              type: "string[]",
-            },
-          ],
-          stateMutability: "nonpayable",
-          type: "constructor",
-        },
-        {
-          inputs: [],
-          name: "end",
-          outputs: [],
-          stateMutability: "nonpayable",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "getResults",
-          outputs: [
-            {
-              internalType: "string[]",
-              name: "names",
-              type: "string[]",
-            },
-            {
-              internalType: "uint256[]",
-              name: "votes",
-              type: "uint256[]",
-            },
-          ],
-          stateMutability: "nonpayable",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "string",
-              name: "_candidateName",
-              type: "string",
-            },
-          ],
-          name: "vote",
-          outputs: [],
-          stateMutability: "nonpayable",
-          type: "function",
-        },
-      ];
+    // console.log(data);
+    var candidates = ["cand1", "cand2", "cand3"];
       
-      var candidates = ["cand1", "cand2", "cand3"];
-      
-      var contract = new initializedWeb3.eth.Contract(abi);
+    var contract = new initializedWeb3.eth.Contract(abi);
 
-      var cdata = contract.deploy({
+    cdata = contract.deploy({
         data: "0x" + data,
         arguments: [candidates],
-      });
+    });
 
-      var options = {
+    var options = {
         from: publickey,
         data: cdata._deployData,
-      };
-      console.log(publickey);
-      var nonce = await web3.eth.getTransactionCount(publickey);
-      options.nonce = nonce;
-      let gasPrice = web3.eth.gasPrice;
-      let gasPriceHex = gasPrice;
-      let gasLimitHex = 6000000;
-      options.gasPrice = gasPriceHex;
-      options.gasLimit = gasLimitHex;
-      var signedTx = await web3.eth.accounts.signTransaction(
+    };
+    console.log(publickey);
+    var nonce = await web3.eth.getTransactionCount(publickey);
+    options.nonce = nonce;
+    let gasPrice = web3.eth.gasPrice;
+    let gasPriceHex = gasPrice;
+    let gasLimitHex = 6000000;
+    options.gasPrice = gasPriceHex;
+    options.gasLimit = gasLimitHex;
+    var signedTx = await web3.eth.accounts.signTransaction(
         options,
         privatekey
-      );
-      const sentTx = await web3.eth.sendSignedTransaction(
+    );
+    const sentTx = await web3.eth.sendSignedTransaction(
         signedTx.raw || signedTx.rawTransaction
-      );
+    );
       
 }
 
