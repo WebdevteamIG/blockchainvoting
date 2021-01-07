@@ -56,12 +56,12 @@ async function deployContract(){
     var data = compiledcode.evm.bytecode.object;
     // console.log(data);
     var candidates = ["cand1", "cand2", "cand3"];
-      
+    var duration = 10000;
     var contract = new initializedWeb3.eth.Contract(abi);
 
     cdata = contract.deploy({
         data: "0x" + data,
-        arguments: [candidates],
+        arguments: [duration,candidates],
     });
 
     var options = {
@@ -69,18 +69,18 @@ async function deployContract(){
         data: cdata._deployData,
     };
     console.log(publickey);
-    var nonce = await web3.eth.getTransactionCount(publickey);
+    var nonce = await initializedWeb3.eth.getTransactionCount(publickey);
     options.nonce = nonce;
-    let gasPrice = web3.eth.gasPrice;
+    let gasPrice = initializedWeb3.eth.gasPrice;
     let gasPriceHex = gasPrice;
     let gasLimitHex = 6000000;
     options.gasPrice = gasPriceHex;
     options.gasLimit = gasLimitHex;
-    var signedTx = await web3.eth.accounts.signTransaction(
+    var signedTx = await initializedWeb3.eth.accounts.signTransaction(
         options,
         privatekey
     );
-    const sentTx = await web3.eth.sendSignedTransaction(
+    const sentTx = await initializedWeb3.eth.sendSignedTransaction(
         signedTx.raw || signedTx.rawTransaction
     );
       
