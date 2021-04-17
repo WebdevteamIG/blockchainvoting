@@ -7,6 +7,7 @@ contract Voting {
     address admin; //admin address
     mapping(uint256 => uint256) voteCount; // To keep track of votes for candidate (candidate id is used for noting which is index of candidates array)
     mapping(address => bool) voted; // use voted or not
+    mapping(address => bool) elligbleVoters; // List of elligble voters
     bool ended = false; // To check ended oor not
     uint endtime;
     modifier onlyAdmin{
@@ -27,7 +28,7 @@ contract Voting {
         endtime =  block.timestamp + (duarationHours * 1 hours);
     }
     
-    function register() notEnded public{ //Function for voters to register.
+    function register() notEnded public{
         elligbleVoters[msg.sender] = true;
     }
     
