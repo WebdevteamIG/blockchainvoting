@@ -1,4 +1,4 @@
-pragma solidity ^0.7.0;
+pragma solidity ^0.8.0;
 pragma experimental ABIEncoderV2;
 
 contract Voting {
@@ -8,6 +8,7 @@ contract Voting {
     mapping(uint256 => uint256) voteCount; // To keep track of votes for candidate (candidate id is used for noting which is index of candidates array)
     mapping(address => bool) voted; // use voted or not
     bool ended = false; // To check ended oor not
+    uint endtime;
     modifier onlyAdmin{
         // Todo : Only adming modifier
         require(msg.sender == admin);
@@ -16,13 +17,14 @@ contract Voting {
     
     modifier notEnded{
         //Todo : Verify ended or not
-        require(ended == false);
+        require(ended == false && block.timestamp < endtime);
         _;
     }
     
-    constructor (string[] memory _candidates){
-        candidate = _candidates;
+    constructor (uint duarationHours, string[] memory _candidates){
+        candidates = _candidates;
         admin=msg.sender;
+        endtime =  block.timestamp + (duarationHours * 1 hours);
     }
     
     function vote(string memory _candidateName) notEnded public {
@@ -55,8 +57,8 @@ contract Voting {
 
     function getResults() onlyAdmin public returns(string[] memory names, uint256[] memory votes) {
         // Todo : Return results as names array and votes count
-        string[] memory _names;
-        uint256[] memory _votes;
+        string[] memory _names = new string[](candidates.length);
+        uint256[] memory _votes = new uint256[](candidates.length);
         for(uint i=0;i<candidates.length;i++){
             _names[i]=candidates[i];
             _votes[i]=voteCount[i];
