@@ -35,7 +35,7 @@ contract Voting {
     function vote(string memory _candidateName) notEnded public {
         // Todo : first verify voter previously voted
         // increase count of candidateid in voteCount;
-        if(elligbleVoters[msg.sender] == true){
+       require(elligbleVoters[msg.sender] == true, "You are not ellgible to vote.");
             bool t=true;
             if(voted[msg.sender]==false){
                 for(uint i=0;i<candidates.length;i++){
@@ -53,10 +53,7 @@ contract Voting {
             }
             if(t==true){
                 revert("the candidate does not exist in the list");
-            }
-        }else{
-            revert("The voter is not ellgible to vote.");
-        }
+            }        
     }
     
     function end() onlyAdmin notEnded public{
