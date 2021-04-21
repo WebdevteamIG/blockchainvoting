@@ -35,6 +35,7 @@ contract Voting {
     function vote(string memory _candidateName) notEnded public {
         // Todo : first verify voter previously voted
         // increase count of candidateid in voteCount;
+<<<<<<< HEAD
         require(elligbleVoters[msg.sender] == true,"You are not ellgible to vote.");
         bool t=true;
         require(voted[msg.sender] == false, "You have already voted.");
@@ -48,6 +49,27 @@ contract Voting {
                 }
             }
         require(t== false,"The candidate doesn't exist in the list.");        
+=======
+       require(elligbleVoters[msg.sender] == true, "You are not ellgible to vote.");
+            bool t=true;
+            if(voted[msg.sender]==false){
+                for(uint i=0;i<candidates.length;i++){
+                    if (keccak256(abi.encodePacked(_candidateName)) == keccak256(abi.encodePacked(candidates[i]))){
+                        voteCount[i]++;
+                        voted[msg.sender]=true;//marking him since he voted now
+                        t=false;
+                        break;//deafult values in a mapping for uint is 0 so need not worry about
+                        //base case
+                    }
+                }
+            }
+            else{
+                revert("the person has already voted");
+            }
+            if(t==true){
+                revert("the candidate does not exist in the list");
+            }        
+>>>>>>> 1442de7eee5a41f2ad818861236c2dbb2a071c9f
     }
     
     function end() onlyAdmin notEnded public{
